@@ -23,6 +23,10 @@ app.use("/ai", aiRoutes)
 
 
 
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', service: 'Soen Backend API' });
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
