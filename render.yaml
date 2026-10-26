@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: aj-chat-app
+    runtime: node
+    plan: free
+    autoDeploy: true
+    rootDir: ChatApp-Clean-Project/chat app/chat-app-main/server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

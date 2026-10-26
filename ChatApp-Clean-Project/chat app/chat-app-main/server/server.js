@@ -11,10 +11,10 @@ const port = process.env.PORT || 8000;
 
 
 
-const corsOption ={
-    origin: process.env.FRONTEND_URL,
-    credentials:true
-}
+const corsOption = {
+    origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL, "https://avishjain9.github.io"] : true,
+    credentials: true
+};
 
 connectDb();
 
@@ -23,10 +23,11 @@ app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.use('/api',router)
+app.get('/health', (req, res) => res.json({ status: 'ok', service: 'Chat App API' }));
+app.get('/', (req, res) => res.json({ status: 'ok', service: 'Chat App API' }));
 
+app.use('/api',router);
 
-
-app.listen(port , () => {
-    console.log(`Server running on http://localhost:${port}`)
-})
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+});

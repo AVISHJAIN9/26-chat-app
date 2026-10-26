@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY);
+const apiKey = process.env.GOOGLE_AI_KEY || "dummy_api_key_for_startup";
+const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     generationConfig: {
@@ -102,7 +102,9 @@ const model = genAI.getGenerativeModel({
 });
 
 export const generateResult = async (prompt) => {
-
+    if (!process.env.GOOGLE_AI_KEY) {
+        return JSON.stringify({ text: "AI service is currently not configured with GOOGLE_AI_KEY." });
+    }
     const result = await model.generateContent(prompt);
 
     return result.response.text()
